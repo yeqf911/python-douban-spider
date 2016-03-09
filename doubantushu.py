@@ -3,7 +3,7 @@ import requests
 import time
 from bs4 import BeautifulSoup
 
-url_head = 'https://www.douban.com/j/tag/items?start='
+url_head = 'https://www.douban.com/j/tag/items?start=&limit={}6&topic_id=255&topic_name=%E5%B0%8F%E8%AF%B4&mod=book'
 url_tail = '&limit=6&topic_id=255&topic_name=%E5%B0%8F%E8%AF%B4&mod=book'
 info = []
 
@@ -27,15 +27,15 @@ def get_page(url, data=None):
             'desc': cut(desc.get_text()),
             'rating': cut(rating.get_text()),
             'image': cut(image.get('src')),
-            'author': cut(desc.get_text().split('/')[0])
+            'author': list(desc.stripped_strings)[0],
         }
         info.append(data)
 
 
 # 分页爬去豆瓣网页异步加载的数据
 def get_more_page(url):
-    for i in range(0, 300, 6):
-        s = url + str(i) + url_tail
+    for i in range(0, 6, 6):
+        s = url.format(str(i))
         get_page(s)
         time.sleep(2)
 

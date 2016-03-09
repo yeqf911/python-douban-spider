@@ -7,6 +7,8 @@ info = []
 web_info = requests.get(url)
 soup = BeautifulSoup(web_info.text, 'lxml')
 
+print(soup)
+
 titles = soup.select('body > div.wrap.clearfix.con_bg > div.con_l > div.pho_info > h4 > em')
 addrs = soup.select('body > div.wrap.clearfix.con_bg > div.con_l > div.pho_info > p > span.pr5')
 prices = soup.select('#pricePart > div.day_l > span')
